@@ -2,25 +2,31 @@ package cli
 
 import (
 	"errors"
-	"io"
 	"fmt"
-	"slices"
+	"io"
 )
 
-var allowedCommands = []string{"capture", "list", "show"}
+type CommandHandler func(args []string) error
 
 type App struct {
 	in io.Reader
 	out io.Writer
 	dbPath string
+	handlers map[string]CommandHandler
 }
 
 func NewApp(in io.Reader, out io.Writer, dbPath string) *App {
-	return &App{
+	app := &App{
 		in: in,
 		out: out,
 		dbPath: dbPath,
+		handlers: make(map[string]CommandHandler),
 	}
+
+	app.handlers["capture"] = app.handleCapture
+	// app.handlers["list"] = app.handleList
+	// app.handlers["show"] = app.handleShow
+	return app
 }
 
 func (a* App) Run(args []string) error {
@@ -28,11 +34,19 @@ func (a* App) Run(args []string) error {
 		return errors.New("usage: notes <capture|list|show>")
 	}
 
-	if slices.Contains(allowedCommands, args[0]) {
-		fmt.Println("I exist.")
-		return nil
-	} else {
-		return fmt.Errorf("Unknown command: %s", args[0])
+	cmd := Command {
+		Name: args[0],
+		Args: args[1:],
+	}
+	return a.HandleCommand(cmd)
+}
+
+func (a* App) HandleCommand(cmd Command) error {
+	handler, exists := a.handlers[cmd.Name]
+	if !exists{
+		err := fmt.Errorf("Invalid command: %s", cmd.Name)
+		return err
 	}
 
+	return handler(cmd.Args)
 }

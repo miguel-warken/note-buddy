@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 	"fmt"
-	"github.com/miguel-warken/notes/internal/cli"
+	"note-buddy-main/internal/cli"
 )
 
 func main() {

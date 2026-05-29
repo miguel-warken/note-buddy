@@ -1,0 +1,17 @@
+-- MOCK DATA - FOR DEVELOPMENT/TESTING ONLY - DO NOT USE IN PRODUCTION
+
+INSERT OR IGNORE INTO draft_sessions (id, subject, title, started_at, status) VALUES
+    (1001, 'MOCK_SUBJECT_DRAFT_A', 'MOCK_TITLE_DRAFT_A', '2026-01-01T10:00:00Z', 'active'),
+    (1002, 'MOCK_SUBJECT_DRAFT_B', 'MOCK_TITLE_DRAFT_B', '2026-01-02T11:00:00Z', 'active');
+
+INSERT OR IGNORE INTO draft_entries (id, draft_session_id, content, created_at) VALUES
+    (2001, 1001, 'MOCK_DRAFT_ENTRY_CONTENT_1 (fake data)', '2026-01-01T10:05:00Z'),
+    (2002, 1002, 'MOCK_DRAFT_ENTRY_CONTENT_2 (fake data)', '2026-01-02T11:05:00Z');
+
+INSERT OR IGNORE INTO sessions (id, subject, title, started_at, saved_at) VALUES
+    (3001, 'MOCK_SUBJECT_SESSION_A', 'MOCK_TITLE_SESSION_A', '2026-01-03T09:00:00Z', '2026-01-03T09:30:00Z'),
+    (3002, 'MOCK_SUBJECT_SESSION_B', 'MOCK_TITLE_SESSION_B', '2026-01-04T14:00:00Z', '2026-01-04T14:45:00Z');
+
+INSERT OR IGNORE INTO session_entries (id, session_id, content, created_at, position) VALUES
+    (4001, 3001, 'MOCK_SESSION_ENTRY_CONTENT_1 (fake data)', '2026-01-03T09:10:00Z', 1),
+    (4002, 3002, 'MOCK_SESSION_ENTRY_CONTENT_2 (fake data)', '2026-01-04T14:10:00Z', 1);
